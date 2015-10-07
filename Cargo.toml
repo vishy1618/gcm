@@ -1,0 +1,8 @@
+[package]
+name = "gcm"
+version = "0.1.0"
+authors = ["Suvish Varghese Thoovamalayil <suvisht@thoughtworks.com>"]
+
+[dependencies]
+rustc-serialize = "*"
+curl = "*"
