@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `NotificationBuilder` struct in crate `gcm`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, NotificationBuilder">
+
+    <title>gcm::notification::NotificationBuilder - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='../index.html'>gcm</a>::<wbr><a href='index.html'>notification</a></p><script>window.sidebarCurrent = {name: 'NotificationBuilder', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>gcm</a>::<wbr><a href='index.html'>notification</a>::<wbr><a class='struct' href=''>NotificationBuilder</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-2264' class='srclink' href='../../src/gcm/notification/mod.rs.html#90-103' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct NotificationBuilder&lt;'a&gt; {
+    // some fields omitted
+}</pre><div class='docblock'><p>A builder to get a <code>Notification</code> instance.</p>
+
+<h1 id="examples" class='section-header'><a
+                           href="#examples">Examples</a></h1><pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>gcm</span>::<span class='ident'>notification</span>::<span class='ident'>NotificationBuilder</span>;
+
+<span class='kw'>let</span> <span class='ident'>notification</span> <span class='op'>=</span> <span class='ident'>NotificationBuilder</span>::<span class='ident'>new</span>(<span class='string'>&quot;India vs. Australia&quot;</span>)
+    .<span class='ident'>body</span>(<span class='string'>&quot;3 runs to win in 1 ball&quot;</span>)
+    .<span class='ident'>finalize</span>();</pre>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../../gcm/notification/struct.NotificationBuilder.html' title='gcm::notification::NotificationBuilder'>NotificationBuilder</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(title: &amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='struct' href='../../gcm/notification/struct.NotificationBuilder.html' title='gcm::notification::NotificationBuilder'>NotificationBuilder</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>Get a new <code>NotificationBuilder</code> instance, with a title.</p>
+</div><h4 id='method.body' class='method'><code>fn <a href='#method.body' class='fnname'>body</a>(&amp;mut self, body: &amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; &amp;mut <a class='struct' href='../../gcm/notification/struct.NotificationBuilder.html' title='gcm::notification::NotificationBuilder'>NotificationBuilder</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>Set the body of the notification</p>
+</div><h4 id='method.icon' class='method'><code>fn <a href='#method.icon' class='fnname'>icon</a>(&amp;mut self, icon: &amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; &amp;mut <a class='struct' href='../../gcm/notification/struct.NotificationBuilder.html' title='gcm::notification::NotificationBuilder'>NotificationBuilder</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>Set the notification icon. Defaults to <code>myicon</code></p>
+</div><h4 id='method.sound' class='method'><code>fn <a href='#method.sound' class='fnname'>sound</a>(&amp;mut self, sound: &amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; &amp;mut <a class='struct' href='../../gcm/notification/struct.NotificationBuilder.html' title='gcm::notification::NotificationBuilder'>NotificationBuilder</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>Set the sound to be played</p>
+</div><h4 id='method.badge' class='method'><code>fn <a href='#method.badge' class='fnname'>badge</a>(&amp;mut self, badge: &amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; &amp;mut <a class='struct' href='../../gcm/notification/struct.NotificationBuilder.html' title='gcm::notification::NotificationBuilder'>NotificationBuilder</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>Set the badge for iOS notifications</p>
+</div><h4 id='method.tag' class='method'><code>fn <a href='#method.tag' class='fnname'>tag</a>(&amp;mut self, tag: &amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; &amp;mut <a class='struct' href='../../gcm/notification/struct.NotificationBuilder.html' title='gcm::notification::NotificationBuilder'>NotificationBuilder</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>Tagging a notification allows you to replace existing notifications
+with the same tag with this new notification</p>
+</div><h4 id='method.color' class='method'><code>fn <a href='#method.color' class='fnname'>color</a>(&amp;mut self, color: &amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; &amp;mut <a class='struct' href='../../gcm/notification/struct.NotificationBuilder.html' title='gcm::notification::NotificationBuilder'>NotificationBuilder</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>The color of the icon, in #rrggbb format</p>
+</div><h4 id='method.click_action' class='method'><code>fn <a href='#method.click_action' class='fnname'>click_action</a>(&amp;mut self, click_action: &amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; &amp;mut <a class='struct' href='../../gcm/notification/struct.NotificationBuilder.html' title='gcm::notification::NotificationBuilder'>NotificationBuilder</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>What happens when the user clicks on the notification. Refer to
+<a href="https://developers.google.com/cloud-messaging/http-server-ref#table2">https://developers.google.com/cloud-messaging/http-server-ref#table2</a> for
+details.</p>
+</div><h4 id='method.body_loc_key' class='method'><code>fn <a href='#method.body_loc_key' class='fnname'>body_loc_key</a>(&amp;mut self, body_loc_key: &amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; &amp;mut <a class='struct' href='../../gcm/notification/struct.NotificationBuilder.html' title='gcm::notification::NotificationBuilder'>NotificationBuilder</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>Set the body key string for localization</p>
+</div><h4 id='method.body_loc_args' class='method'><code>fn <a href='#method.body_loc_args' class='fnname'>body_loc_args</a>(&amp;mut self, body_loc_args: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;&amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;) -&gt; &amp;mut <a class='struct' href='../../gcm/notification/struct.NotificationBuilder.html' title='gcm::notification::NotificationBuilder'>NotificationBuilder</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>String value to replace format specifiers in the body string.</p>
+</div><h4 id='method.title_loc_key' class='method'><code>fn <a href='#method.title_loc_key' class='fnname'>title_loc_key</a>(&amp;mut self, title_loc_key: &amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; &amp;mut <a class='struct' href='../../gcm/notification/struct.NotificationBuilder.html' title='gcm::notification::NotificationBuilder'>NotificationBuilder</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>Set the title key string for localization</p>
+</div><h4 id='method.title_loc_args' class='method'><code>fn <a href='#method.title_loc_args' class='fnname'>title_loc_args</a>(&amp;mut self, title_loc_args: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;&amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;) -&gt; &amp;mut <a class='struct' href='../../gcm/notification/struct.NotificationBuilder.html' title='gcm::notification::NotificationBuilder'>NotificationBuilder</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>String value to replace format specifiers in the title string.</p>
+</div><h4 id='method.finalize' class='method'><code>fn <a href='#method.finalize' class='fnname'>finalize</a>(&amp;mut self) -&gt; <a class='struct' href='../../gcm/notification/struct.Notification.html' title='gcm::notification::Notification'>Notification</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>Complete the build and get a <code>Notification</code> instance</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div>
+            <div class="shortcuts">
+                <h1>Keyboard Shortcuts</h1>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h1>Search Tricks</h1>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>typedef</code> (or
+                    <code>tdef</code>).
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "gcm";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script async src="../../search-index.js"></script>
+</body>
+</html>
