@@ -4,6 +4,9 @@ mod tests;
 use std::collections::BTreeMap;
 use rustc_serialize::json::{ToJson, Json};
 
+/// This struct represents a GCM notification. Use the 
+/// corresponding `NotificationBuilder` to get an instance. You can then use 
+/// this notification instance when sending a GCM message.
 #[derive(Debug, PartialEq, Clone)]
 pub struct Notification<'a> {
   title: &'a str,
@@ -73,6 +76,17 @@ impl <'a>ToJson for Notification<'a> {
   }
 }
 
+/// A builder to get a `Notification` instance.
+///
+/// # Examples
+///
+/// ```rust
+/// use gcm::notification::NotificationBuilder;
+///
+/// let notification = NotificationBuilder::new("India vs. Australia")
+///     .body("3 runs to win in 1 ball")
+///     .finalize();
+/// ```
 pub struct NotificationBuilder<'a> {
   title: &'a str,
   body: Option<&'a str>,
@@ -89,6 +103,7 @@ pub struct NotificationBuilder<'a> {
 }
 
 impl <'a> NotificationBuilder<'a> {
+  /// Get a new `NotificationBuilder` instance, with a title.
   pub fn new(title: &'a str) -> NotificationBuilder<'a> {
     NotificationBuilder {
       title: title,
@@ -106,61 +121,76 @@ impl <'a> NotificationBuilder<'a> {
     }
   }
 
+  /// Set the body of the notification
   pub fn body(&mut self, body: &'a str) -> &mut NotificationBuilder<'a> {
     self.body = Some(body);
     self
   }
 
+  /// Set the notification icon. Defaults to `myicon`
   pub fn icon(&mut self, icon: &'a str) -> &mut NotificationBuilder<'a> {
     self.icon = icon;
     self
   }
 
+  /// Set the sound to be played
   pub fn sound(&mut self, sound: &'a str) -> &mut NotificationBuilder<'a> {
     self.sound = Some(sound);
     self
   }
 
+  /// Set the badge for iOS notifications
   pub fn badge(&mut self, badge: &'a str) -> &mut NotificationBuilder<'a> {
     self.badge = Some(badge);
     self
   }
 
+  /// Tagging a notification allows you to replace existing notifications
+  /// with the same tag with this new notification
   pub fn tag(&mut self, tag: &'a str) -> &mut NotificationBuilder<'a> {
     self.tag = Some(tag);
     self
   }
 
+  /// The color of the icon, in #rrggbb format
   pub fn color(&mut self, color: &'a str) -> &mut NotificationBuilder<'a> {
     self.color = Some(color);
     self
   }
 
+  /// What happens when the user clicks on the notification. Refer to 
+  /// https://developers.google.com/cloud-messaging/http-server-ref#table2 for
+  /// details.
   pub fn click_action(&mut self, click_action: &'a str) -> &mut NotificationBuilder<'a> {
     self.click_action = Some(click_action);
     self
   }
 
+  /// Set the body key string for localization
   pub fn body_loc_key(&mut self, body_loc_key: &'a str) -> &mut NotificationBuilder<'a> {
     self.body_loc_key = Some(body_loc_key);
     self
   }
 
+  /// String value to replace format specifiers in the body string.
   pub fn body_loc_args(&mut self, body_loc_args: Vec<&'a str>) -> &mut NotificationBuilder<'a> {
     self.body_loc_args = Some(body_loc_args.iter().map(|s| s.to_string()).collect());
     self
   }
 
+  /// Set the title key string for localization
   pub fn title_loc_key(&mut self, title_loc_key: &'a str) -> &mut NotificationBuilder<'a> {
     self.title_loc_key = Some(title_loc_key);
     self
   }
 
+  /// String value to replace format specifiers in the title string.
   pub fn title_loc_args(&mut self, title_loc_args: Vec<&'a str>) -> &mut NotificationBuilder<'a> {
     self.title_loc_args = Some(title_loc_args.iter().map(|s| s.to_string()).collect());
     self
   }
 
+  /// Complete the build and get a `Notification` instance
   pub fn finalize(&mut self) -> Notification<'a> {
     Notification {
       title: self.title,

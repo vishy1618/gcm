@@ -14,6 +14,14 @@ pub enum Priority {
   Normal, High
 }
 
+/// Represents a GCM message. Construct the GCM message 
+/// using various utility methods and finally send it.
+/// # Examples:
+/// ```rust
+/// use gcm::message::Message;
+/// 
+/// let message = Message::new("<registration id>").dry_run(true);
+/// ```
 pub struct Message<'a> {
   to: &'a str,
   registration_ids: Option<Vec<String>>,
@@ -83,6 +91,8 @@ impl <'a> ToJson for Message<'a> {
 }
 
 impl <'a> Message<'a> {
+  /// Get a new instance of Message. You need to supply either
+  /// a registration id, or a topic (/topic/...).
   pub fn new(to: &'a str) -> Message {
     Message {
       to: to,
@@ -99,46 +109,74 @@ impl <'a> Message<'a> {
     }
   }
 
+  /// Set various registration ids to which the message ought to be sent.
   pub fn registration_ids(mut self, ids: Vec<&'a str>) -> Message<'a> {
     self.registration_ids = Some(ids.iter().map(|s| s.to_string()).collect());
     self
   }
 
+  /// Set this parameter to identify groups of messages that can be collapsed.
   pub fn collapse_key(mut self, collapse_key: &'a str) -> Message<'a> {
     self.collapse_key = Some(collapse_key);
     self
   }
 
+  /// Set the priority of the message. You can set Normal or High priorities.
+  /// # Examples:
+  /// ```rust
+  /// use gcm::message::{Message, Priority};
+  /// 
+  /// let message = Message::new("<registration id>")
+  ///     .priority(Priority::High);
+  /// ```
   pub fn priority(mut self, priority: Priority) -> Message<'a> {
     self.priority = Some(priority);
     self
   }
 
+  /// To set the `content-available` field on iOS
   pub fn content_available(mut self, content_available: bool) -> Message<'a> {
     self.content_available = Some(content_available);
     self
   }
 
+  /// When set to `true`, sends the message only when the device is active.
   pub fn delay_while_idle(mut self, delay_while_idle: bool) -> Message<'a> {
     self.delay_while_idle = Some(delay_while_idle);
     self
   }
 
+  /// How long (in seconds) to keep the message on GCM servers in case the device 
+  /// is offline. The maximum and default is 4 weeks.
   pub fn time_to_live(mut self, time_to_live: i32) -> Message<'a> {
     self.time_to_live = Some(time_to_live);
     self
   }
 
+  /// Package name of the application where the registration tokens must match.
   pub fn restricted_package_name(mut self, restricted_package_name: &'a str) -> Message<'a> {
     self.restricted_package_name = Some(restricted_package_name);
     self
   }
 
+  /// When set to `true`, allows you to test GCM without actually sending the message.
   pub fn dry_run(mut self, dry_run: bool) -> Message<'a> {
     self.dry_run = Some(dry_run);
     self
   }
 
+  /// Use this to add custom key-value pairs to the message. This data
+  /// must be handled appropriately on the client end.
+  /// # Examples:
+  /// ```rust
+  /// use gcm::message::Message;
+  /// use std::collections::HashMap;
+  ///
+  /// let mut map = HashMap::new();
+  /// map.insert("message", "Howdy!");
+  /// 
+  /// let message = Message::new("<registration id>").data(map);
+  /// ```
   pub fn data(mut self, data: HashMap<&'a str, &'a str>) -> Message<'a> {
     let mut datamap: HashMap<String, String> = HashMap::new();
     for (key, val) in data.iter() {
@@ -149,11 +187,37 @@ impl <'a> Message<'a> {
     self
   }
 
+  /// Use this to set a `Notification` for the message.
+  /// # Examples:
+  /// ```rust
+  /// use gcm::message::Message;
+  /// use gcm::notification::NotificationBuilder;
+  ///
+  /// let notification = NotificationBuilder::new("Hey!")
+  ///     .body("Do you want to catch up later?")
+  ///     .finalize();
+  /// 
+  /// let message = Message::new("<registration id>")
+  ///     .notification(notification);
+  /// ```
   pub fn notification(mut self, notification: Notification<'a>) -> Message<'a> {
     self.notification = Some(notification);
     self
   }
 
+  /// Send the message using your GCM API Key.
+  /// # Examples:
+  /// ```no_run
+  /// use gcm::message::Message;
+  /// use std::collections::HashMap;
+  ///
+  /// let mut map = HashMap::new();
+  /// map.insert("message", "Howdy!");
+  /// 
+  /// let result = Message::new("<registration id>")
+  ///     .data(map)
+  ///     .send("<GCM API Key>");
+  /// ```
   pub fn send(self, api_key: &'a str) -> Result<response::GcmResponse, response::GcmError> {
     let payload = self.to_json().to_string();
     let auth_header = "key=".to_string() + api_key;
