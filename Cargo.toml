@@ -7,7 +7,7 @@ license = "MIT"
 homepage = "https://github.com/vishy1618/gcm"
 repository = "https://github.com/vishy1618/gcm"
 documentation = "http://vishy1618.github.io/gcm/gcm/"
-keywords = ["gcm", "google", "cloud", "messaging", "android", "ios"]
+keywords = ["gcm", "cloud", "messaging", "android", "ios"]
 
 [dependencies]
 rustc-serialize = "*"
