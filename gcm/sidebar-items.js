@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["message",""],["notification",""]]});
+initSidebarItems({"enum":[["Priority",""]],"struct":[["Message","Represents a GCM message. Construct the GCM message using various utility methods and finally send it. # Examples: ```rust use gcm::Message;"],["Notification","This struct represents a GCM notification. Use the corresponding `NotificationBuilder` to get an instance. You can then use  this notification instance when sending a GCM message."],["NotificationBuilder","A builder to get a `Notification` instance."]]});

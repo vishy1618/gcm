@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Message` struct in crate `gcm`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Message">
+
+    <title>gcm::Message - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='index.html'>gcm</a></p><script>window.sidebarCurrent = {name: 'Message', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>gcm</a>::<wbr><a class='struct' href=''>Message</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-832' class='srclink' href='../src/gcm/message/mod.rs.html#26-38' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Message&lt;'a&gt; {
+    // some fields omitted
+}</pre><div class='docblock'><p>Represents a GCM message. Construct the GCM message
+using various utility methods and finally send it.</p>
+
+<h1 id="examples:" class='section-header'><a
+                           href="#examples:">Examples:</a></h1><pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>gcm</span>::<span class='ident'>Message</span>;
+ 
+<span class='kw'>let</span> <span class='ident'>message</span> <span class='op'>=</span> <span class='ident'>Message</span>::<span class='ident'>new</span>(<span class='string'>&quot;&lt;registration id&gt;&quot;</span>).<span class='ident'>dry_run</span>(<span class='boolval'>true</span>);</pre>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../gcm/struct.Message.html' title='gcm::Message'>Message</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(to: &amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='struct' href='../gcm/struct.Message.html' title='gcm::Message'>Message</a></code></h4>
+<div class='docblock'><p>Get a new instance of Message. You need to supply either
+a registration id, or a topic (/topic/...).</p>
+</div><h4 id='method.registration_ids' class='method'><code>fn <a href='#method.registration_ids' class='fnname'>registration_ids</a>(self, ids: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;&amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;) -&gt; <a class='struct' href='../gcm/struct.Message.html' title='gcm::Message'>Message</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>Set various registration ids to which the message ought to be sent.</p>
+</div><h4 id='method.collapse_key' class='method'><code>fn <a href='#method.collapse_key' class='fnname'>collapse_key</a>(self, collapse_key: &amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='struct' href='../gcm/struct.Message.html' title='gcm::Message'>Message</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>Set this parameter to identify groups of messages that can be collapsed.</p>
+</div><h4 id='method.priority' class='method'><code>fn <a href='#method.priority' class='fnname'>priority</a>(self, priority: <a class='enum' href='../gcm/enum.Priority.html' title='gcm::Priority'>Priority</a>) -&gt; <a class='struct' href='../gcm/struct.Message.html' title='gcm::Message'>Message</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>Set the priority of the message. You can set Normal or High priorities.</p>
+
+<h1 id="examples:" class='section-header'><a
+                           href="#examples:">Examples:</a></h1><pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>gcm</span>::{<span class='ident'>Message</span>, <span class='ident'>Priority</span>};
+ 
+<span class='kw'>let</span> <span class='ident'>message</span> <span class='op'>=</span> <span class='ident'>Message</span>::<span class='ident'>new</span>(<span class='string'>&quot;&lt;registration id&gt;&quot;</span>)
+    .<span class='ident'>priority</span>(<span class='ident'>Priority</span>::<span class='ident'>High</span>);</pre>
+</div><h4 id='method.content_available' class='method'><code>fn <a href='#method.content_available' class='fnname'>content_available</a>(self, content_available: <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='struct' href='../gcm/struct.Message.html' title='gcm::Message'>Message</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>To set the <code>content-available</code> field on iOS</p>
+</div><h4 id='method.delay_while_idle' class='method'><code>fn <a href='#method.delay_while_idle' class='fnname'>delay_while_idle</a>(self, delay_while_idle: <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='struct' href='../gcm/struct.Message.html' title='gcm::Message'>Message</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>When set to <code>true</code>, sends the message only when the device is active.</p>
+</div><h4 id='method.time_to_live' class='method'><code>fn <a href='#method.time_to_live' class='fnname'>time_to_live</a>(self, time_to_live: <a href='http://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>) -&gt; <a class='struct' href='../gcm/struct.Message.html' title='gcm::Message'>Message</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>How long (in seconds) to keep the message on GCM servers in case the device
+is offline. The maximum and default is 4 weeks.</p>
+</div><h4 id='method.restricted_package_name' class='method'><code>fn <a href='#method.restricted_package_name' class='fnname'>restricted_package_name</a>(self, restricted_package_name: &amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='struct' href='../gcm/struct.Message.html' title='gcm::Message'>Message</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>Package name of the application where the registration tokens must match.</p>
+</div><h4 id='method.dry_run' class='method'><code>fn <a href='#method.dry_run' class='fnname'>dry_run</a>(self, dry_run: <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='struct' href='../gcm/struct.Message.html' title='gcm::Message'>Message</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>When set to <code>true</code>, allows you to test GCM without actually sending the message.</p>
+</div><h4 id='method.data' class='method'><code>fn <a href='#method.data' class='fnname'>data</a>(self, data: <a class='struct' href='http://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html' title='std::collections::hash::map::HashMap'>HashMap</a>&lt;&amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, &amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;) -&gt; <a class='struct' href='../gcm/struct.Message.html' title='gcm::Message'>Message</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>Use this to add custom key-value pairs to the message. This data
+must be handled appropriately on the client end.</p>
+
+<h1 id="examples:" class='section-header'><a
+                           href="#examples:">Examples:</a></h1><pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>gcm</span>::<span class='ident'>Message</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>map</span> <span class='op'>=</span> <span class='ident'>HashMap</span>::<span class='ident'>new</span>();
+<span class='ident'>map</span>.<span class='ident'>insert</span>(<span class='string'>&quot;message&quot;</span>, <span class='string'>&quot;Howdy!&quot;</span>);
+ 
+<span class='kw'>let</span> <span class='ident'>message</span> <span class='op'>=</span> <span class='ident'>Message</span>::<span class='ident'>new</span>(<span class='string'>&quot;&lt;registration id&gt;&quot;</span>).<span class='ident'>data</span>(<span class='ident'>map</span>);</pre>
+</div><h4 id='method.notification' class='method'><code>fn <a href='#method.notification' class='fnname'>notification</a>(self, notification: <a class='struct' href='../gcm/struct.Notification.html' title='gcm::Notification'>Notification</a>&lt;'a&gt;) -&gt; <a class='struct' href='../gcm/struct.Message.html' title='gcm::Message'>Message</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>Use this to set a <code>Notification</code> for the message.</p>
+
+<h1 id="examples:" class='section-header'><a
+                           href="#examples:">Examples:</a></h1><pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>gcm</span>::{<span class='ident'>Message</span>, <span class='ident'>NotificationBuilder</span>};
+
+<span class='kw'>let</span> <span class='ident'>notification</span> <span class='op'>=</span> <span class='ident'>NotificationBuilder</span>::<span class='ident'>new</span>(<span class='string'>&quot;Hey!&quot;</span>)
+    .<span class='ident'>body</span>(<span class='string'>&quot;Do you want to catch up later?&quot;</span>)
+    .<span class='ident'>finalize</span>();
+ 
+<span class='kw'>let</span> <span class='ident'>message</span> <span class='op'>=</span> <span class='ident'>Message</span>::<span class='ident'>new</span>(<span class='string'>&quot;&lt;registration id&gt;&quot;</span>)
+    .<span class='ident'>notification</span>(<span class='ident'>notification</span>);</pre>
+</div><h4 id='method.send' class='method'><code>fn <a href='#method.send' class='fnname'>send</a>(self, api_key: &amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;GcmResponse, GcmError&gt;</code></h4>
+<div class='docblock'><p>Send the message using your GCM API Key.</p>
+
+<h1 id="examples:" class='section-header'><a
+                           href="#examples:">Examples:</a></h1><pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>gcm</span>::<span class='ident'>Message</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>map</span> <span class='op'>=</span> <span class='ident'>HashMap</span>::<span class='ident'>new</span>();
+<span class='ident'>map</span>.<span class='ident'>insert</span>(<span class='string'>&quot;message&quot;</span>, <span class='string'>&quot;Howdy!&quot;</span>);
+ 
+<span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Message</span>::<span class='ident'>new</span>(<span class='string'>&quot;&lt;registration id&gt;&quot;</span>)
+    .<span class='ident'>data</span>(<span class='ident'>map</span>)
+    .<span class='ident'>send</span>(<span class='string'>&quot;&lt;GCM API Key&gt;&quot;</span>);</pre>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;'a&gt; <a class='trait' href='../rustc_serialize/json/trait.ToJson.html' title='rustc_serialize::json::ToJson'>ToJson</a> for <a class='struct' href='../gcm/struct.Message.html' title='gcm::Message'>Message</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.to_json' class='method'><code>fn <a href='../rustc_serialize/json/trait.ToJson.html#method.to_json' class='fnname'>to_json</a>(&amp;self) -&gt; <a class='enum' href='../rustc_serialize/json/enum.Json.html' title='rustc_serialize::json::Json'>Json</a></code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div>
+            <div class="shortcuts">
+                <h1>Keyboard Shortcuts</h1>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h1>Search Tricks</h1>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>typedef</code> (or
+                    <code>tdef</code>).
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "gcm";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script async src="../search-index.js"></script>
+</body>
+</html>
