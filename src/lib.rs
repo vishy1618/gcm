@@ -21,7 +21,7 @@
 //! Here is an example to send out a GCM Message with some custom data:
 //! 
 //! ```no_run
-//! use gcm::message::Message;
+//! use gcm::Message;
 //! use std::collections::HashMap;
 //!
 //! let mut map = HashMap::new();
@@ -35,8 +35,7 @@
 //! To send a message using GCM Notifications, we first build the notification:
 //! 
 //! ```rust
-//! use gcm::message::Message;
-//! use gcm::notification::NotificationBuilder;
+//! use gcm::{Message, NotificationBuilder};
 //!
 //! let notification = NotificationBuilder::new("Hey!")
 //!     .body("Do you want to catch up later?")
@@ -45,18 +44,35 @@
 //! And then set it in the message, before sending it:
 //! 
 //! ```no_run
-//! # use gcm::message::Message;
-//! # use gcm::notification::NotificationBuilder;
+//! # use gcm::{Message, NotificationBuilder};
 //! # let notification = NotificationBuilder::new("Hey!")
 //! #     .body("Do you want to catch up later?")
 //! #     .finalize();
-//! let message = Message::new("<registration id>")
+//! let result = Message::new("<registration id>")
 //!     .notification(notification)
 //!     .send("<GCM API Key>");
 //! ```
+//! You can now handle the result accordingly:
+//!
+//! ```no_run
+//! # use gcm::{Message, NotificationBuilder};
+//! # let notification = NotificationBuilder::new("Hey!")
+//! #     .body("Do you want to catch up later?")
+//! #     .finalize();
+//! # let result = Message::new("<registration id>")
+//! #     .notification(notification)
+//! #     .send("<GCM API Key>");
+//! match result {
+//!   Ok(response) => println!("message_id: {:?}", response.message_id),
+//!   Err(error) => println!("Error: {:?}", error),
+//! }
+//! ```
 
-pub mod message;
-pub mod notification;
+
+mod message;
+pub use message::*;
+mod notification;
+pub use notification::*;
 
 extern crate rustc_serialize;
 extern crate curl;

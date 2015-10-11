@@ -1,7 +1,7 @@
 extern crate rustc_serialize;
 
 use rustc_serialize::json::{ToJson};
-use notification::*;
+use {NotificationBuilder};
 
 #[test]
 fn should_create_new_notification_message() {

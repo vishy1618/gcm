@@ -1,4 +1,5 @@
-use message::*;
+use {Message, Priority};
+use GcmError;
 use notification::NotificationBuilder;
 use std::collections::HashMap;
 
@@ -139,7 +140,7 @@ fn should_parse_error_as_unauthorized() {
   let result = Message::parse_response(401, "Unauthorized");
 
   assert!(result.is_err());
-  assert_eq!(result.err().unwrap(), response::GcmError::Unauthorized);
+  assert_eq!(result.err().unwrap(), GcmError::Unauthorized);
 }
 
 #[test]
@@ -148,7 +149,7 @@ fn should_parse_error_as_invalid_message() {
 
   assert!(result.is_err());
   assert_eq!(result.err().unwrap(), 
-    response::GcmError::InvalidMessage("INVALID_REGISTRATION".to_string()));
+    GcmError::InvalidMessage("INVALID_REGISTRATION".to_string()));
 }
 
 #[test]
@@ -156,7 +157,7 @@ fn should_parse_error_as_server_error() {
   let result = Message::parse_response(500, "Internal Server Error");
 
   assert!(result.is_err());
-  assert_eq!(result.err().unwrap(), response::GcmError::ServerError);
+  assert_eq!(result.err().unwrap(), GcmError::ServerError);
 }
 
 #[test]

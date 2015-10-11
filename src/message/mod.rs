@@ -1,7 +1,8 @@
 #[cfg(test)]
 mod tests;
-pub mod response;
+mod response;
 
+pub use message::response::*;
 use notification::Notification;
 use std::collections::HashMap;
 use std::collections::BTreeMap;
@@ -18,7 +19,7 @@ pub enum Priority {
 /// using various utility methods and finally send it.
 /// # Examples:
 /// ```rust
-/// use gcm::message::Message;
+/// use gcm::Message;
 /// 
 /// let message = Message::new("<registration id>").dry_run(true);
 /// ```
@@ -124,7 +125,7 @@ impl <'a> Message<'a> {
   /// Set the priority of the message. You can set Normal or High priorities.
   /// # Examples:
   /// ```rust
-  /// use gcm::message::{Message, Priority};
+  /// use gcm::{Message, Priority};
   /// 
   /// let message = Message::new("<registration id>")
   ///     .priority(Priority::High);
@@ -169,7 +170,7 @@ impl <'a> Message<'a> {
   /// must be handled appropriately on the client end.
   /// # Examples:
   /// ```rust
-  /// use gcm::message::Message;
+  /// use gcm::Message;
   /// use std::collections::HashMap;
   ///
   /// let mut map = HashMap::new();
@@ -190,8 +191,7 @@ impl <'a> Message<'a> {
   /// Use this to set a `Notification` for the message.
   /// # Examples:
   /// ```rust
-  /// use gcm::message::Message;
-  /// use gcm::notification::NotificationBuilder;
+  /// use gcm::{Message, NotificationBuilder};
   ///
   /// let notification = NotificationBuilder::new("Hey!")
   ///     .body("Do you want to catch up later?")
@@ -208,7 +208,7 @@ impl <'a> Message<'a> {
   /// Send the message using your GCM API Key.
   /// # Examples:
   /// ```no_run
-  /// use gcm::message::Message;
+  /// use gcm::Message;
   /// use std::collections::HashMap;
   ///
   /// let mut map = HashMap::new();
@@ -225,17 +225,24 @@ impl <'a> Message<'a> {
     let body;
     let code;
 
-    res = http::handle()
+    let result = http::handle()
         .post("https://gcm-http.googleapis.com/gcm/send", &payload)
         .header("Authorization", &auth_header)
         .header("Content-Type", "application/json")
-        .exec()
-        .unwrap();
+        .exec();
 
-    body = str::from_utf8(res.get_body()).unwrap();
-    code = res.get_code();
+    match result {
+      Ok(unwrapped) => {
+        res = unwrapped;
+        body = str::from_utf8(res.get_body()).unwrap();
+        code = res.get_code();
 
-    Message::parse_response(code, body)
+        Message::parse_response(code, body)
+      },
+      Err(_) => {
+        Message::parse_response(500, "Server Error")
+      }
+    }
   }
 
   fn parse_response(status: u32, body: &str) -> Result<response::GcmResponse, response::GcmError> {

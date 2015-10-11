@@ -81,7 +81,7 @@ impl <'a>ToJson for Notification<'a> {
 /// # Examples
 ///
 /// ```rust
-/// use gcm::notification::NotificationBuilder;
+/// use gcm::NotificationBuilder;
 ///
 /// let notification = NotificationBuilder::new("India vs. Australia")
 ///     .body("3 runs to win in 1 ball")

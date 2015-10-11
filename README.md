@@ -21,7 +21,7 @@ extern crate gcm;
 Here is an example to send out a GCM Message with some custom data:
  
 ```rust
-use gcm::message::Message;
+use gcm::Message;
 use std::collections::HashMap;
 
 let mut map = HashMap::new();
@@ -35,8 +35,7 @@ let result = Message::new("<registration id>")
 To send a message using GCM Notifications, we first build the notification:
 
 ```rust
-use gcm::message::Message;
-use gcm::notification::NotificationBuilder;
+use gcm::{Message, NotificationBuilder};
 
 let notification = NotificationBuilder::new("Hey!")
     .body("Do you want to catch up later?")
@@ -46,7 +45,16 @@ let notification = NotificationBuilder::new("Hey!")
 And then set it in the message, before sending it:
 
 ```rust
-let message = Message::new("<registration id>")
+let result = Message::new("<registration id>")
     .notification(notification)
     .send("<GCM API Key>");
+```
+
+You can now handle the result accordingly:
+
+```rust
+match result {
+  Ok(response) => println!("message_id: {:?}", response.message_id),
+  Err(error) => println!("Error: {:?}", error),
+}
 ```
