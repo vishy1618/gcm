@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests;
-pub mod response;
+mod response;
 
 pub use message::response::*;
 use notification::Notification;
