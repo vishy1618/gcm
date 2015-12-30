@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["GcmError",""],["Priority",""]],"struct":[["GcmResponse",""],["Message","Represents a GCM message. Construct the GCM message using various utility methods and finally send it. # Examples: ```rust use gcm::Message;"],["MessageResult",""]]});
+initSidebarItems({"enum":[["GcmError",""],["Priority",""]],"mod":[["response",""]],"struct":[["GcmResponse",""],["Message","Represents a GCM message. Construct the GCM message using various utility methods and finally send it. # Examples: ```rust use gcm::Message;"],["MessageResult",""]]});
