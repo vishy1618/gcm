@@ -186,3 +186,11 @@ fn should_parse_successful_response() {
 
   assert_eq!(message_results.len(), 1);
 }
+
+#[test]
+fn should_parse_decode_errors_as_server_errors() {
+  let result = Message::parse_response(200, "Invalid JSON");
+
+  assert!(result.is_err());
+  assert_eq!(result.err().unwrap(), GcmError::InvalidJsonBody);
+}

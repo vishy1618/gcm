@@ -248,7 +248,7 @@ impl <'a> Message<'a> {
   fn parse_response(status: u32, body: &str) -> Result<response::GcmResponse, response::GcmError> {
     match status {
       200 => {
-        Ok(json::decode(body).unwrap())
+        Ok(try!(json::decode(body)))
       },
       401 => Err(response::GcmError::Unauthorized),
       400 => Err(response::GcmError::InvalidMessage(body.to_string())),
