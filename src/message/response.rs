@@ -18,5 +18,7 @@ pub struct MessageResult {
 
 #[derive(PartialEq, Debug)]
 pub enum GcmError {
-  Unauthorized, InvalidMessage(String), ServerError
+  Unauthorized, 
+  InvalidMessage(String), 
+  ServerError
 }
