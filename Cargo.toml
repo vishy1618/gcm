@@ -1,6 +1,6 @@
 [package]
 name = "gcm"
-version = "0.1.3"
+version = "0.1.4"
 authors = ["Suvish Varghese Thoovamalayil <vishy1618@gmail.com>"]
 description = "An API to talk to GCM (Google Cloud Messaging) in Rust"
 license = "MIT"
