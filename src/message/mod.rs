@@ -7,7 +7,12 @@ use notification::Notification;
 use std::collections::HashMap;
 use std::collections::BTreeMap;
 use std::str;
-use curl::http;
+use std::io::Read;
+
+use hyper::Client;
+use hyper::header;
+use hyper::mime::{Mime, TopLevel, SubLevel, Attr, Value};
+use hyper::status::{StatusCode,StatusClass};
 use rustc_serialize::json::{self, Json, ToJson};
 
 #[derive(PartialEq, Debug, Clone)]
@@ -219,41 +224,42 @@ impl <'a> Message<'a> {
   ///     .send("<GCM API Key>");
   /// ```
   pub fn send(self, api_key: &'a str) -> Result<response::GcmResponse, response::GcmError> {
-    let payload = self.to_json().to_string();
-    let auth_header = "key=".to_string() + api_key;
-    let res;
-    let body;
-    let code;
 
-    let result = http::handle()
-        .post("https://gcm-http.googleapis.com/gcm/send", &payload)
-        .header("Authorization", &auth_header)
-        .header("Content-Type", "application/json")
-        .exec();
+	let client = Client::new();
+
+	let result = client.post("https://gcm-http.googleapis.com/gcm/send")
+					.body(self.to_json().to_string().as_bytes())
+					.header(header::Authorization("key=".to_string() + api_key))
+					.header(header::ContentType(Mime(TopLevel::Application,SubLevel::Json,vec![(Attr::Charset, Value::Utf8)])))
+					.send();
 
     match result {
-      Ok(unwrapped) => {
-        res = unwrapped;
-        body = str::from_utf8(res.get_body()).unwrap();
-        code = res.get_code();
-
-        Message::parse_response(code, body)
+	  Ok(mut res) => {
+		let mut body = String::new();
+		res.read_to_string(&mut body).unwrap(); //unsafe?
+		Message::parse_response(res.status, &body)
       },
       Err(_) => {
-        Message::parse_response(500, "Server Error")
+		Message::parse_response(StatusCode::InternalServerError, "Server Error")
       }
     }
   }
 
-  fn parse_response(status: u32, body: &str) -> Result<response::GcmResponse, response::GcmError> {
-    match status {
-      200 => {
-        Ok(json::decode(body).unwrap())
-      },
-      401 => Err(response::GcmError::Unauthorized),
-      400 => Err(response::GcmError::InvalidMessage(body.to_string())),
-      500...599 => Err(response::GcmError::ServerError),
-      _ => Err(response::GcmError::InvalidMessage("Unknown Error".to_string())),
-    }
+  fn parse_response(status: StatusCode, body: &str) -> Result<response::GcmResponse, response::GcmError> {
+	//200 Ok: Request was successful!
+	if status == StatusCode::Ok {
+		println!("got: {:?}", body);
+		return Ok(json::decode(body).unwrap()) //UNSAFE
+	}
+	//check for server error (5xx)
+	if status.class() == StatusClass::ServerError {
+		return Err(response::GcmError::ServerError);
+	}
+	//match remaining status codes
+	match status {
+		StatusCode::Unauthorized => Err(response::GcmError::Unauthorized),
+		StatusCode::BadRequest => Err(response::GcmError::InvalidMessage(body.to_string())),
+		_ => Err(response::GcmError::InvalidMessage("Unknown Error".to_string()))
+	}
   }
 }
