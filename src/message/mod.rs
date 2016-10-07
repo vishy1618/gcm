@@ -248,7 +248,7 @@ impl <'a> Message<'a> {
   fn parse_response(status: StatusCode, body: &str) -> Result<response::GcmResponse, response::GcmError> {
 	//200 Ok: Request was successful!
 	if status == StatusCode::Ok {
-		println!("got: {:?}", body);
+		//println!("got: {:?}", body); //debug
 		return Ok(json::decode(body).unwrap()) //UNSAFE
 	}
 	//check for server error (5xx)
