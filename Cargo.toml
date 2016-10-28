@@ -1,6 +1,6 @@
 [package]
 name = "gcm"
-version = "0.1.4"
+version = "0.1.5"
 authors = ["Suvish Varghese Thoovamalayil <vishy1618@gmail.com>"]
 description = "An API to talk to GCM (Google Cloud Messaging) in Rust"
 license = "MIT"
@@ -10,5 +10,6 @@ documentation = "http://vishy1618.github.io/gcm/gcm/"
 keywords = ["gcm", "cloud", "messaging", "android", "ios"]
 
 [dependencies]
-rustc-serialize = "*"
-curl = "*"
+rustc-serialize = "^0.3"
+hyper = "^0.9"
+
