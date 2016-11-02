@@ -15,7 +15,7 @@ pub struct GcmResponse {
 
 #[derive(RustcDecodable, Debug)]
 pub struct MessageResult {
-  pub message_id: Option<String>, //can be a string ("fake_message_id") when using dry_run, otherwise its a number
+  pub message_id: Option<u64>,
   pub registration_id: Option<u64>,
   pub error: Option<String>
 }

@@ -224,23 +224,30 @@ impl <'a> Message<'a> {
   ///     .send("<GCM API Key>");
   /// ```
   pub fn send(self, api_key: &'a str) -> Result<response::GcmResponse, response::GcmError> {
+    let client = Client::new();
 
-	let client = Client::new();
-
-	let result = client.post("https://gcm-http.googleapis.com/gcm/send")
-					.body(self.to_json().to_string().as_bytes())
-					.header(header::Authorization("key=".to_string() + api_key))
-					.header(header::ContentType(Mime(TopLevel::Application,SubLevel::Json,vec![(Attr::Charset, Value::Utf8)])))
-					.send();
+    let result = client.post("https://gcm-http.googleapis.com/gcm/send")
+				.body(self.to_json().to_string().as_bytes())
+				.header(header::Authorization("key=".to_string() + api_key))
+				.header(
+          header::ContentType(
+            Mime(
+              TopLevel::Application,
+              SubLevel::Json,
+              vec![(Attr::Charset, Value::Utf8)]
+            )
+          )
+        )
+        .send();
 
     match result {
-	  Ok(mut res) => {
-		let mut body = String::new();
-		res.read_to_string(&mut body).unwrap(); //unsafe?
-		Message::parse_response(res.status, &body)
+      Ok(mut res) => {
+        let mut body = String::new();
+        res.read_to_string(&mut body).unwrap(); //unsafe?
+        Message::parse_response(res.status, &body)
       },
       Err(_) => {
-		Message::parse_response(StatusCode::InternalServerError, "Server Error")
+        Message::parse_response(StatusCode::InternalServerError, "Server Error")
       }
     }
   }
@@ -248,7 +255,6 @@ impl <'a> Message<'a> {
   fn parse_response(status: StatusCode, body: &str) -> Result<response::GcmResponse, response::GcmError> {
   	//200 Ok: Request was successful!
   	if status == StatusCode::Ok {
-  		//println!("got: {:?}", body); //debug
   		return Ok(try!(json::decode(body)));
   	}
   	//check for server error (5xx)

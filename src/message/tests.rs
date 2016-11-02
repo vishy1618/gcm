@@ -2,6 +2,7 @@ use {Message, Priority};
 use GcmError;
 use notification::NotificationBuilder;
 use std::collections::HashMap;
+use hyper::status::StatusCode;
 
 #[test]
 fn should_create_new_message() {
@@ -137,7 +138,7 @@ fn should_set_notifications() {
 
 #[test]
 fn should_parse_error_as_unauthorized() {
-  let result = Message::parse_response(401, "Unauthorized");
+  let result = Message::parse_response(StatusCode::Unauthorized, "Unauthorized");
 
   assert!(result.is_err());
   assert_eq!(result.err().unwrap(), GcmError::Unauthorized);
@@ -145,7 +146,7 @@ fn should_parse_error_as_unauthorized() {
 
 #[test]
 fn should_parse_error_as_invalid_message() {
-  let result = Message::parse_response(400, "INVALID_REGISTRATION");
+  let result = Message::parse_response(StatusCode::BadRequest, "INVALID_REGISTRATION");
 
   assert!(result.is_err());
   assert_eq!(result.err().unwrap(), 
@@ -154,7 +155,7 @@ fn should_parse_error_as_invalid_message() {
 
 #[test]
 fn should_parse_error_as_server_error() {
-  let result = Message::parse_response(500, "Internal Server Error");
+  let result = Message::parse_response(StatusCode::InternalServerError, "Internal Server Error");
 
   assert!(result.is_err());
   assert_eq!(result.err().unwrap(), GcmError::ServerError);
@@ -174,7 +175,7 @@ fn should_parse_successful_response() {
       ]
     }
   "#;
-  let result = Message::parse_response(200, response);
+  let result = Message::parse_response(StatusCode::Ok, response);
 
   assert!(result.is_ok());
 
@@ -189,7 +190,7 @@ fn should_parse_successful_response() {
 
 #[test]
 fn should_parse_decode_errors_as_server_errors() {
-  let result = Message::parse_response(200, "Invalid JSON");
+  let result = Message::parse_response(StatusCode::Ok, "Invalid JSON");
 
   assert!(result.is_err());
   assert_eq!(result.err().unwrap(), GcmError::InvalidJsonBody);
