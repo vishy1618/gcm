@@ -13,6 +13,8 @@ use hyper::Client;
 use hyper::header;
 use hyper::mime::{Mime, TopLevel, SubLevel, Attr, Value};
 use hyper::status::{StatusCode,StatusClass};
+use hyper::net::HttpsConnector;
+use hyper_native_tls::NativeTlsClient;
 use rustc_serialize::json::{self, Json, ToJson};
 
 #[derive(PartialEq, Debug, Clone)]
@@ -225,7 +227,9 @@ impl <'a> Message<'a> {
   /// ```
   pub fn send(self, api_key: &'a str) -> Result<response::GcmResponse, response::GcmError> {
 
-	let client = Client::new();
+	let ssl = NativeTlsClient::new().unwrap();
+	let connector = HttpsConnector::new(ssl);
+	let client = Client::with_connector(connector);
 
 	let result = client.post("https://gcm-http.googleapis.com/gcm/send")
 					.body(self.to_json().to_string().as_bytes())

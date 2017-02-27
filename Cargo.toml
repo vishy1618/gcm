@@ -12,4 +12,4 @@ keywords = ["gcm", "cloud", "messaging", "android", "ios"]
 [dependencies]
 rustc-serialize = "^0.3"
 hyper = "^0.10"
-
+hyper-native-tls = "^0.2"
