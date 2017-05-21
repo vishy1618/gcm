@@ -233,14 +233,24 @@ impl <'a> Message<'a> {
   	let result = client.post("https://gcm-http.googleapis.com/gcm/send")
   					.body(self.to_json().to_string().as_bytes())
   					.header(header::Authorization("key=".to_string() + api_key))
-  					.header(header::ContentType(Mime(TopLevel::Application,SubLevel::Json,vec![(Attr::Charset, Value::Utf8)])))
+  					.header(
+              header::ContentType(
+                Mime(
+                  TopLevel::Application,
+                  SubLevel::Json,
+                  vec![(Attr::Charset, Value::Utf8)]
+                )
+              )
+            )
   					.send();
 
     match result {
       Ok(mut res) => {
         let mut body = String::new();
-        res.read_to_string(&mut body).unwrap(); //unsafe?
-        Message::parse_response(res.status, &body)
+        match res.read_to_string(&mut body) {
+          Ok(_) => Message::parse_response(res.status, &body),
+          Err(_) => Message::parse_response(StatusCode::InternalServerError, "Server Error")
+        }
       },
       Err(_) => {
         Message::parse_response(StatusCode::InternalServerError, "Server Error")
