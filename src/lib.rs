@@ -78,3 +78,4 @@ pub use message::response::GcmError as Error;
 
 extern crate rustc_serialize;
 extern crate hyper;
+extern crate hyper_native_tls;
