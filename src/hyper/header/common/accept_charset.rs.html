@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/Users/suvisht/.multirust/toolchains/stable/cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.9.10/src/header/common/accept_charset.rs`.">
+    <meta name="description" content="Source to the Rust file `/Users/suvisht/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.4/src/header/common/accept_charset.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>accept_charset.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../../main.css">
     
@@ -16,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -42,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -98,61 +99,61 @@
 <span id="54">54</span>
 <span id="55">55</span>
 <span id="56">56</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>header</span>::{<span class='ident'>Charset</span>, <span class='ident'>QualityItem</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">header</span>::{<span class="ident">Charset</span>, <span class="ident">QualityItem</span>};
 
-<span class='macro'>header</span><span class='macro'>!</span> {
-    <span class='doccomment'>/// `Accept-Charset` header, defined in</span>
-    <span class='doccomment'>/// [RFC7231](http://tools.ietf.org/html/rfc7231#section-5.3.3)</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// The `Accept-Charset` header field can be sent by a user agent to</span>
-    <span class='doccomment'>/// indicate what charsets are acceptable in textual response content.</span>
-    <span class='doccomment'>/// This field allows user agents capable of understanding more</span>
-    <span class='doccomment'>/// comprehensive or special-purpose charsets to signal that capability</span>
-    <span class='doccomment'>/// to an origin server that is capable of representing information in</span>
-    <span class='doccomment'>/// those charsets.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # ABNF</span>
-    <span class='doccomment'>/// ```plain</span>
-    <span class='doccomment'>/// Accept-Charset = 1#( ( charset / &quot;*&quot; ) [ weight ] )</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Example values</span>
-    <span class='doccomment'>/// * `iso-8859-5, unicode-1-1;q=0.8`</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Examples</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// use hyper::header::{Headers, AcceptCharset, Charset, qitem};</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let mut headers = Headers::new();</span>
-    <span class='doccomment'>/// headers.set(</span>
-    <span class='doccomment'>///     AcceptCharset(vec![qitem(Charset::Us_Ascii)])</span>
-    <span class='doccomment'>/// );</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// use hyper::header::{Headers, AcceptCharset, Charset, Quality, QualityItem};</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let mut headers = Headers::new();</span>
-    <span class='doccomment'>/// headers.set(</span>
-    <span class='doccomment'>///     AcceptCharset(vec![</span>
-    <span class='doccomment'>///         QualityItem::new(Charset::Us_Ascii, Quality(900)),</span>
-    <span class='doccomment'>///         QualityItem::new(Charset::Iso_8859_10, Quality(200)),</span>
-    <span class='doccomment'>///     ])</span>
-    <span class='doccomment'>/// );</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// use hyper::header::{Headers, AcceptCharset, Charset, qitem};</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let mut headers = Headers::new();</span>
-    <span class='doccomment'>/// headers.set(</span>
-    <span class='doccomment'>///     AcceptCharset(vec![qitem(Charset::Ext(&quot;utf-8&quot;.to_owned()))])</span>
-    <span class='doccomment'>/// );</span>
-    <span class='doccomment'>/// ```</span>
-    (<span class='ident'>AcceptCharset</span>, <span class='string'>&quot;Accept-Charset&quot;</span>) <span class='op'>=&gt;</span> (<span class='ident'>QualityItem</span><span class='op'>&lt;</span><span class='ident'>Charset</span><span class='op'>&gt;</span>)<span class='op'>+</span>
+<span class="macro">header</span><span class="macro">!</span> {
+    <span class="doccomment">/// `Accept-Charset` header, defined in</span>
+    <span class="doccomment">/// [RFC7231](http://tools.ietf.org/html/rfc7231#section-5.3.3)</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The `Accept-Charset` header field can be sent by a user agent to</span>
+    <span class="doccomment">/// indicate what charsets are acceptable in textual response content.</span>
+    <span class="doccomment">/// This field allows user agents capable of understanding more</span>
+    <span class="doccomment">/// comprehensive or special-purpose charsets to signal that capability</span>
+    <span class="doccomment">/// to an origin server that is capable of representing information in</span>
+    <span class="doccomment">/// those charsets.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # ABNF</span>
+    <span class="doccomment">/// ```plain</span>
+    <span class="doccomment">/// Accept-Charset = 1#( ( charset / &quot;*&quot; ) [ weight ] )</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Example values</span>
+    <span class="doccomment">/// * `iso-8859-5, unicode-1-1;q=0.8`</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use hyper::header::{Headers, AcceptCharset, Charset, qitem};</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut headers = Headers::new();</span>
+    <span class="doccomment">/// headers.set(</span>
+    <span class="doccomment">///     AcceptCharset(vec![qitem(Charset::Us_Ascii)])</span>
+    <span class="doccomment">/// );</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use hyper::header::{Headers, AcceptCharset, Charset, Quality, QualityItem};</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut headers = Headers::new();</span>
+    <span class="doccomment">/// headers.set(</span>
+    <span class="doccomment">///     AcceptCharset(vec![</span>
+    <span class="doccomment">///         QualityItem::new(Charset::Us_Ascii, Quality(900)),</span>
+    <span class="doccomment">///         QualityItem::new(Charset::Iso_8859_10, Quality(200)),</span>
+    <span class="doccomment">///     ])</span>
+    <span class="doccomment">/// );</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use hyper::header::{Headers, AcceptCharset, Charset, qitem};</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut headers = Headers::new();</span>
+    <span class="doccomment">/// headers.set(</span>
+    <span class="doccomment">///     AcceptCharset(vec![qitem(Charset::Ext(&quot;utf-8&quot;.to_owned()))])</span>
+    <span class="doccomment">/// );</span>
+    <span class="doccomment">/// ```</span>
+    (<span class="ident">AcceptCharset</span>, <span class="string">&quot;Accept-Charset&quot;</span>) <span class="op">=&gt;</span> (<span class="ident">QualityItem</span><span class="op">&lt;</span><span class="ident">Charset</span><span class="op">&gt;</span>)<span class="op">+</span>
 
-    <span class='ident'>test_accept_charset</span> {
-        <span class='doccomment'>/// Testcase from RFC</span>
-        <span class='macro'>test_header</span><span class='macro'>!</span>(<span class='ident'>test1</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>b&quot;iso-8859-5, unicode-1-1;q=0.8&quot;</span>]);
+    <span class="ident">test_accept_charset</span> {
+        <span class="doccomment">/// Testcase from RFC</span>
+        <span class="macro">test_header</span><span class="macro">!</span>(<span class="ident">test1</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;iso-8859-5, unicode-1-1;q=0.8&quot;</span>]);
     }
 }
 </pre>
@@ -212,11 +213,9 @@
     <script>
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
-    
     <script defer src="../../../../search-index.js"></script>
 </body>
 </html>

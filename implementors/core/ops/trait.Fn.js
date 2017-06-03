@@ -1,5 +1,10 @@
 (function() {var implementors = {};
-implementors["lazy_static"] = [];implementors["libc"] = [];implementors["openssl"] = [];implementors["hyper"] = [];
+implementors["antidote"] = [];
+implementors["core_foundation"] = [];
+implementors["hyper"] = [];
+implementors["libc"] = [];
+implementors["serde"] = [];
+implementors["syn"] = [];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

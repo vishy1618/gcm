@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/Users/suvisht/.multirust/toolchains/stable/cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.9.10/src/header/common/user_agent.rs`.">
+    <meta name="description" content="Source to the Rust file `/Users/suvisht/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.4/src/header/common/user_agent.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>user_agent.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../../main.css">
     
@@ -16,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -42,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -84,47 +85,47 @@
 <span id="40">40</span>
 <span id="41">41</span>
 <span id="42">42</span>
-</pre><pre class='rust '>
-<span class='macro'>header</span><span class='macro'>!</span> {
-    <span class='doccomment'>/// `User-Agent` header, defined in</span>
-    <span class='doccomment'>/// [RFC7231](http://tools.ietf.org/html/rfc7231#section-5.5.3)</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// The `User-Agent` header field contains information about the user</span>
-    <span class='doccomment'>/// agent originating the request, which is often used by servers to help</span>
-    <span class='doccomment'>/// identify the scope of reported interoperability problems, to work</span>
-    <span class='doccomment'>/// around or tailor responses to avoid particular user agent</span>
-    <span class='doccomment'>/// limitations, and for analytics regarding browser or operating system</span>
-    <span class='doccomment'>/// use.  A user agent SHOULD send a User-Agent field in each request</span>
-    <span class='doccomment'>/// unless specifically configured not to do so.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # ABNF</span>
-    <span class='doccomment'>/// ```plain</span>
-    <span class='doccomment'>/// User-Agent = product *( RWS ( product / comment ) )</span>
-    <span class='doccomment'>/// product         = token [&quot;/&quot; product-version]</span>
-    <span class='doccomment'>/// product-version = token</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Example values</span>
-    <span class='doccomment'>/// * `CERN-LineMode/2.15 libwww/2.17b3`</span>
-    <span class='doccomment'>/// * `Bunnies`</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Notes</span>
-    <span class='doccomment'>/// * The parser does not split the value</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Example</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// use hyper::header::{Headers, UserAgent};</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let mut headers = Headers::new();</span>
-    <span class='doccomment'>/// headers.set(UserAgent(&quot;hyper/0.5.2&quot;.to_owned()));</span>
-    <span class='doccomment'>/// ```</span>
-    (<span class='ident'>UserAgent</span>, <span class='string'>&quot;User-Agent&quot;</span>) <span class='op'>=&gt;</span> [<span class='ident'>String</span>]
+</pre><pre class="rust ">
+<span class="macro">header</span><span class="macro">!</span> {
+    <span class="doccomment">/// `User-Agent` header, defined in</span>
+    <span class="doccomment">/// [RFC7231](http://tools.ietf.org/html/rfc7231#section-5.5.3)</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The `User-Agent` header field contains information about the user</span>
+    <span class="doccomment">/// agent originating the request, which is often used by servers to help</span>
+    <span class="doccomment">/// identify the scope of reported interoperability problems, to work</span>
+    <span class="doccomment">/// around or tailor responses to avoid particular user agent</span>
+    <span class="doccomment">/// limitations, and for analytics regarding browser or operating system</span>
+    <span class="doccomment">/// use.  A user agent SHOULD send a User-Agent field in each request</span>
+    <span class="doccomment">/// unless specifically configured not to do so.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # ABNF</span>
+    <span class="doccomment">/// ```plain</span>
+    <span class="doccomment">/// User-Agent = product *( RWS ( product / comment ) )</span>
+    <span class="doccomment">/// product         = token [&quot;/&quot; product-version]</span>
+    <span class="doccomment">/// product-version = token</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Example values</span>
+    <span class="doccomment">/// * `CERN-LineMode/2.15 libwww/2.17b3`</span>
+    <span class="doccomment">/// * `Bunnies`</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Notes</span>
+    <span class="doccomment">/// * The parser does not split the value</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use hyper::header::{Headers, UserAgent};</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut headers = Headers::new();</span>
+    <span class="doccomment">/// headers.set(UserAgent(&quot;hyper/0.5.2&quot;.to_owned()));</span>
+    <span class="doccomment">/// ```</span>
+    (<span class="ident">UserAgent</span>, <span class="string">&quot;User-Agent&quot;</span>) <span class="op">=&gt;</span> [<span class="ident">String</span>]
 
-    <span class='ident'>test_user_agent</span> {
-        <span class='comment'>// Testcase from RFC</span>
-        <span class='macro'>test_header</span><span class='macro'>!</span>(<span class='ident'>test1</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>b&quot;CERN-LineMode/2.15 libwww/2.17b3&quot;</span>]);
-        <span class='comment'>// Own testcase</span>
-        <span class='macro'>test_header</span><span class='macro'>!</span>(<span class='ident'>test2</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>b&quot;Bunnies&quot;</span>], <span class='prelude-val'>Some</span>(<span class='ident'>UserAgent</span>(<span class='string'>&quot;Bunnies&quot;</span>.<span class='ident'>to_owned</span>())));
+    <span class="ident">test_user_agent</span> {
+        <span class="comment">// Testcase from RFC</span>
+        <span class="macro">test_header</span><span class="macro">!</span>(<span class="ident">test1</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;CERN-LineMode/2.15 libwww/2.17b3&quot;</span>]);
+        <span class="comment">// Own testcase</span>
+        <span class="macro">test_header</span><span class="macro">!</span>(<span class="ident">test2</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;Bunnies&quot;</span>], <span class="prelude-val">Some</span>(<span class="ident">UserAgent</span>(<span class="string">&quot;Bunnies&quot;</span>.<span class="ident">to_owned</span>())));
     }
 }
 </pre>
@@ -184,11 +185,9 @@
     <script>
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
-    
     <script defer src="../../../../search-index.js"></script>
 </body>
 </html>

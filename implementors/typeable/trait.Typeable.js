@@ -1,4 +1,5 @@
 (function() {var implementors = {};
+implementors["hyper"] = [];
 implementors["typeable"] = [];
 
             if (window.register_implementors) {

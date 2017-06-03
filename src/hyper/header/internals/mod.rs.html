@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/Users/suvisht/.multirust/toolchains/stable/cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.9.10/src/header/internals/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/Users/suvisht/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.4/src/header/internals/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../../main.css">
     
@@ -16,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -42,15 +43,19 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
-</pre><pre class='rust '>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>item</span>::<span class='ident'>Item</span>;
+<span id="5">5</span>
+<span id="6">6</span>
+</pre><pre class="rust ">
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">item</span>::<span class="ident">Item</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">vec_map</span>::{<span class="ident">VecMap</span>, <span class="ident">Entry</span>};
 
-<span class='kw'>mod</span> <span class='ident'>cell</span>;
-<span class='kw'>mod</span> <span class='ident'>item</span>;
+<span class="kw">mod</span> <span class="ident">cell</span>;
+<span class="kw">mod</span> <span class="ident">item</span>;
+<span class="kw">mod</span> <span class="ident">vec_map</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
@@ -108,11 +113,9 @@
     <script>
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
-    
     <script defer src="../../../../search-index.js"></script>
 </body>
 </html>

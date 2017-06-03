@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/Users/suvisht/.multirust/toolchains/stable/cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.9.10/src/header/common/if_unmodified_since.rs`.">
+    <meta name="description" content="Source to the Rust file `/Users/suvisht/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.4/src/header/common/if_unmodified_since.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>if_unmodified_since.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../../main.css">
     
@@ -16,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -42,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -87,52 +88,52 @@
 <span id="43">43</span>
 <span id="44">44</span>
 <span id="45">45</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>header</span>::<span class='ident'>HttpDate</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">header</span>::<span class="ident">HttpDate</span>;
 
-<span class='macro'>header</span><span class='macro'>!</span> {
-    <span class='doccomment'>/// `If-Unmodified-Since` header, defined in</span>
-    <span class='doccomment'>/// [RFC7232](http://tools.ietf.org/html/rfc7232#section-3.4)</span>
-    <span class='doccomment'>/// </span>
-    <span class='doccomment'>/// The `If-Unmodified-Since` header field makes the request method</span>
-    <span class='doccomment'>/// conditional on the selected representation&#39;s last modification date</span>
-    <span class='doccomment'>/// being earlier than or equal to the date provided in the field-value.</span>
-    <span class='doccomment'>/// This field accomplishes the same purpose as If-Match for cases where</span>
-    <span class='doccomment'>/// the user agent does not have an entity-tag for the representation.</span>
-    <span class='doccomment'>/// </span>
-    <span class='doccomment'>/// # ABNF</span>
-    <span class='doccomment'>/// ```plain</span>
-    <span class='doccomment'>/// If-Unmodified-Since = HTTP-date</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// </span>
-    <span class='doccomment'>/// # Example values</span>
-    <span class='doccomment'>/// * `Sat, 29 Oct 1994 19:43:31 GMT`</span>
-    <span class='doccomment'>/// </span>
-    <span class='doccomment'>/// # Example</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// # extern crate hyper;</span>
-    <span class='doccomment'>/// # extern crate time;</span>
-    <span class='doccomment'>/// # fn main() {</span>
-    <span class='doccomment'>/// // extern crate time;</span>
-    <span class='doccomment'>/// </span>
-    <span class='doccomment'>/// use hyper::header::{Headers, IfUnmodifiedSince, HttpDate};</span>
-    <span class='doccomment'>/// use time::{self, Duration};</span>
-    <span class='doccomment'>/// </span>
-    <span class='doccomment'>/// let mut headers = Headers::new();</span>
-    <span class='doccomment'>/// headers.set(IfUnmodifiedSince(HttpDate(time::now() - Duration::days(1))));</span>
-    <span class='doccomment'>/// # }</span>
-    <span class='doccomment'>/// ```</span>
-    (<span class='ident'>IfUnmodifiedSince</span>, <span class='string'>&quot;If-Unmodified-Since&quot;</span>) <span class='op'>=&gt;</span> [<span class='ident'>HttpDate</span>]
+<span class="macro">header</span><span class="macro">!</span> {
+    <span class="doccomment">/// `If-Unmodified-Since` header, defined in</span>
+    <span class="doccomment">/// [RFC7232](http://tools.ietf.org/html/rfc7232#section-3.4)</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// The `If-Unmodified-Since` header field makes the request method</span>
+    <span class="doccomment">/// conditional on the selected representation&#39;s last modification date</span>
+    <span class="doccomment">/// being earlier than or equal to the date provided in the field-value.</span>
+    <span class="doccomment">/// This field accomplishes the same purpose as If-Match for cases where</span>
+    <span class="doccomment">/// the user agent does not have an entity-tag for the representation.</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// # ABNF</span>
+    <span class="doccomment">/// ```plain</span>
+    <span class="doccomment">/// If-Unmodified-Since = HTTP-date</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// # Example values</span>
+    <span class="doccomment">/// * `Sat, 29 Oct 1994 19:43:31 GMT`</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # extern crate hyper;</span>
+    <span class="doccomment">/// # extern crate time;</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// // extern crate time;</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// use hyper::header::{Headers, IfUnmodifiedSince, HttpDate};</span>
+    <span class="doccomment">/// use time::{self, Duration};</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// let mut headers = Headers::new();</span>
+    <span class="doccomment">/// headers.set(IfUnmodifiedSince(HttpDate(time::now() - Duration::days(1))));</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// ```</span>
+    (<span class="ident">IfUnmodifiedSince</span>, <span class="string">&quot;If-Unmodified-Since&quot;</span>) <span class="op">=&gt;</span> [<span class="ident">HttpDate</span>]
 
-    <span class='ident'>test_if_unmodified_since</span> {
-        <span class='comment'>// Testcase from RFC</span>
-        <span class='macro'>test_header</span><span class='macro'>!</span>(<span class='ident'>test1</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>b&quot;Sat, 29 Oct 1994 19:43:31 GMT&quot;</span>]);
+    <span class="ident">test_if_unmodified_since</span> {
+        <span class="comment">// Testcase from RFC</span>
+        <span class="macro">test_header</span><span class="macro">!</span>(<span class="ident">test1</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;Sat, 29 Oct 1994 19:43:31 GMT&quot;</span>]);
     }
 }
 
-<span class='macro'>bench_header</span><span class='macro'>!</span>(<span class='ident'>imf_fixdate</span>, <span class='ident'>IfUnmodifiedSince</span>, { <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>b&quot;Sun, 07 Nov 1994 08:48:37 GMT&quot;</span>.<span class='ident'>to_vec</span>()] });
-<span class='macro'>bench_header</span><span class='macro'>!</span>(<span class='ident'>rfc_850</span>, <span class='ident'>IfUnmodifiedSince</span>, { <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>b&quot;Sunday, 06-Nov-94 08:49:37 GMT&quot;</span>.<span class='ident'>to_vec</span>()] });
-<span class='macro'>bench_header</span><span class='macro'>!</span>(<span class='ident'>asctime</span>, <span class='ident'>IfUnmodifiedSince</span>, { <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>b&quot;Sun Nov  6 08:49:37 1994&quot;</span>.<span class='ident'>to_vec</span>()] });
+<span class="macro">bench_header</span><span class="macro">!</span>(<span class="ident">imf_fixdate</span>, <span class="ident">IfUnmodifiedSince</span>, { <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;Sun, 07 Nov 1994 08:48:37 GMT&quot;</span>.<span class="ident">to_vec</span>()] });
+<span class="macro">bench_header</span><span class="macro">!</span>(<span class="ident">rfc_850</span>, <span class="ident">IfUnmodifiedSince</span>, { <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;Sunday, 06-Nov-94 08:49:37 GMT&quot;</span>.<span class="ident">to_vec</span>()] });
+<span class="macro">bench_header</span><span class="macro">!</span>(<span class="ident">asctime</span>, <span class="ident">IfUnmodifiedSince</span>, { <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;Sun Nov  6 08:49:37 1994&quot;</span>.<span class="ident">to_vec</span>()] });
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
@@ -190,11 +191,9 @@
     <script>
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
-    
     <script defer src="../../../../search-index.js"></script>
 </body>
 </html>

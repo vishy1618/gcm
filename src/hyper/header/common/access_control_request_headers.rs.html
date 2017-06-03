@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/Users/suvisht/.multirust/toolchains/stable/cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.9.10/src/header/common/access_control_request_headers.rs`.">
+    <meta name="description" content="Source to the Rust file `/Users/suvisht/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.4/src/header/common/access_control_request_headers.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>access_control_request_headers.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../../main.css">
     
@@ -16,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -42,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -100,63 +101,63 @@
 <span id="56">56</span>
 <span id="57">57</span>
 <span id="58">58</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>unicase</span>::<span class='ident'>UniCase</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">unicase</span>::<span class="ident">UniCase</span>;
 
-<span class='macro'>header</span><span class='macro'>!</span> {
-    <span class='doccomment'>/// `Access-Control-Request-Headers` header, part of</span>
-    <span class='doccomment'>/// [CORS](http://www.w3.org/TR/cors/#access-control-request-headers-request-header)</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// The `Access-Control-Request-Headers` header indicates which headers will</span>
-    <span class='doccomment'>/// be used in the actual request as part of the preflight request.</span>
-    <span class='doccomment'>/// during the actual request.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # ABNF</span>
-    <span class='doccomment'>/// ```plain</span>
-    <span class='doccomment'>/// Access-Control-Allow-Headers: &quot;Access-Control-Allow-Headers&quot; &quot;:&quot; #field-name</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Example values</span>
-    <span class='doccomment'>/// * `accept-language, date`</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Examples</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// # extern crate hyper;</span>
-    <span class='doccomment'>/// # extern crate unicase;</span>
-    <span class='doccomment'>/// # fn main() {</span>
-    <span class='doccomment'>/// // extern crate unicase;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// use hyper::header::{Headers, AccessControlRequestHeaders};</span>
-    <span class='doccomment'>/// use unicase::UniCase;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let mut headers = Headers::new();</span>
-    <span class='doccomment'>/// headers.set(</span>
-    <span class='doccomment'>///     AccessControlRequestHeaders(vec![UniCase(&quot;date&quot;.to_owned())])</span>
-    <span class='doccomment'>/// );</span>
-    <span class='doccomment'>/// # }</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// # extern crate hyper;</span>
-    <span class='doccomment'>/// # extern crate unicase;</span>
-    <span class='doccomment'>/// # fn main() {</span>
-    <span class='doccomment'>/// // extern crate unicase;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// use hyper::header::{Headers, AccessControlRequestHeaders};</span>
-    <span class='doccomment'>/// use unicase::UniCase;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let mut headers = Headers::new();</span>
-    <span class='doccomment'>/// headers.set(</span>
-    <span class='doccomment'>///     AccessControlRequestHeaders(vec![</span>
-    <span class='doccomment'>///         UniCase(&quot;accept-language&quot;.to_owned()),</span>
-    <span class='doccomment'>///         UniCase(&quot;date&quot;.to_owned()),</span>
-    <span class='doccomment'>///     ])</span>
-    <span class='doccomment'>/// );</span>
-    <span class='doccomment'>/// # }</span>
-    <span class='doccomment'>/// ```</span>
-    (<span class='ident'>AccessControlRequestHeaders</span>, <span class='string'>&quot;Access-Control-Request-Headers&quot;</span>) <span class='op'>=&gt;</span> (<span class='ident'>UniCase</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>)<span class='op'>*</span>
+<span class="macro">header</span><span class="macro">!</span> {
+    <span class="doccomment">/// `Access-Control-Request-Headers` header, part of</span>
+    <span class="doccomment">/// [CORS](http://www.w3.org/TR/cors/#access-control-request-headers-request-header)</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The `Access-Control-Request-Headers` header indicates which headers will</span>
+    <span class="doccomment">/// be used in the actual request as part of the preflight request.</span>
+    <span class="doccomment">/// during the actual request.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # ABNF</span>
+    <span class="doccomment">/// ```plain</span>
+    <span class="doccomment">/// Access-Control-Allow-Headers: &quot;Access-Control-Allow-Headers&quot; &quot;:&quot; #field-name</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Example values</span>
+    <span class="doccomment">/// * `accept-language, date`</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # extern crate hyper;</span>
+    <span class="doccomment">/// # extern crate unicase;</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// // extern crate unicase;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// use hyper::header::{Headers, AccessControlRequestHeaders};</span>
+    <span class="doccomment">/// use unicase::UniCase;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut headers = Headers::new();</span>
+    <span class="doccomment">/// headers.set(</span>
+    <span class="doccomment">///     AccessControlRequestHeaders(vec![UniCase(&quot;date&quot;.to_owned())])</span>
+    <span class="doccomment">/// );</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # extern crate hyper;</span>
+    <span class="doccomment">/// # extern crate unicase;</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// // extern crate unicase;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// use hyper::header::{Headers, AccessControlRequestHeaders};</span>
+    <span class="doccomment">/// use unicase::UniCase;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut headers = Headers::new();</span>
+    <span class="doccomment">/// headers.set(</span>
+    <span class="doccomment">///     AccessControlRequestHeaders(vec![</span>
+    <span class="doccomment">///         UniCase(&quot;accept-language&quot;.to_owned()),</span>
+    <span class="doccomment">///         UniCase(&quot;date&quot;.to_owned()),</span>
+    <span class="doccomment">///     ])</span>
+    <span class="doccomment">/// );</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// ```</span>
+    (<span class="ident">AccessControlRequestHeaders</span>, <span class="string">&quot;Access-Control-Request-Headers&quot;</span>) <span class="op">=&gt;</span> (<span class="ident">UniCase</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>)<span class="op">*</span>
 
-    <span class='ident'>test_access_control_request_headers</span> {
-        <span class='macro'>test_header</span><span class='macro'>!</span>(<span class='ident'>test1</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>b&quot;accept-language, date&quot;</span>]);
+    <span class="ident">test_access_control_request_headers</span> {
+        <span class="macro">test_header</span><span class="macro">!</span>(<span class="ident">test1</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;accept-language, date&quot;</span>]);
     }
 }
 </pre>
@@ -216,11 +217,9 @@
     <script>
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
-    
     <script defer src="../../../../search-index.js"></script>
 </body>
 </html>
