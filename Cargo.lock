@@ -1,6 +1,6 @@
 [root]
 name = "gcm"
-version = "0.1.6"
+version = "0.2.0"
 dependencies = [
  "hyper 0.10.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "hyper-native-tls 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",

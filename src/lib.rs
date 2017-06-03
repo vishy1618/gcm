@@ -7,7 +7,7 @@
 //!
 //! ```ignore
 //! [dependencies]
-//! gcm = "0.1.4"
+//! gcm = "0.2.0"
 //! ```
 //!
 //! then add this to your crate root:
