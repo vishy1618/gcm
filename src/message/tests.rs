@@ -1,8 +1,10 @@
 use {Message, Priority};
 use GcmError;
 use notification::NotificationBuilder;
+
 use std::collections::HashMap;
 use hyper::status::StatusCode;
+use serde_json;
 
 #[test]
 fn should_create_new_message() {
@@ -44,7 +46,11 @@ fn should_set_priority() {
   let msg = Message::new("token")
       .priority(Priority::Normal);
 
+  let json_result = serde_json::to_string(&msg);
+
   assert_eq!(msg.priority, Some(Priority::Normal));
+  assert!(json_result.is_ok());
+  assert_eq!(json_result.unwrap(), r#"{"to":"token","priority":"normal"}"#);
 }
 
 #[test]
@@ -166,6 +172,10 @@ fn should_parse_successful_response() {
   let response = r#"
     {
       "message_id": 2000000,
+      "multicast_id": 23,
+      "success": 2,
+      "failure": 0,
+      "canonical_ids": 23,
       "results": [
         {
           "message_id": 200000,
@@ -186,6 +196,36 @@ fn should_parse_successful_response() {
   let message_results = result.results.unwrap();
 
   assert_eq!(message_results.len(), 1);
+}
+
+#[test]
+fn should_parse_dry_run_message() {
+  let response = r#"
+    {
+      "message_id": 20000,
+      "multicast_id": 23,
+      "success": 2,
+      "failure": 0,
+      "canonical_ids": 23,
+      "results": [
+        {
+          "message_id": "fake_message_id",
+          "registration_id": 200000,
+          "error": "error"
+        }
+      ]
+    }
+  "#;
+  let result = Message::parse_response(StatusCode::Ok, response);
+
+  assert!(result.is_ok());
+
+  let result = result.unwrap();
+
+  let message_results = result.results.unwrap();
+
+  assert_eq!(message_results.len(), 1);
+  assert_eq!(message_results[0].message_id, None);
 }
 
 #[test]

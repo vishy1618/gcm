@@ -1,79 +1,33 @@
 #[cfg(test)]
 mod tests;
 
-use std::collections::BTreeMap;
-use rustc_serialize::json::{ToJson, Json};
-
 /// This struct represents a GCM notification. Use the 
 /// corresponding `NotificationBuilder` to get an instance. You can then use 
 /// this notification instance when sending a GCM message.
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Serialize)]
 pub struct Notification<'a> {
   title: &'a str,
+  #[serde(skip_serializing_if = "Option::is_none")]
   body: Option<&'a str>,
   icon: &'a str,
+  #[serde(skip_serializing_if = "Option::is_none")]
   sound: Option<&'a str>,
+  #[serde(skip_serializing_if = "Option::is_none")]
   badge: Option<&'a str>,
+  #[serde(skip_serializing_if = "Option::is_none")]
   tag: Option<&'a str>,
+  #[serde(skip_serializing_if = "Option::is_none")]
   color: Option<&'a str>,
+  #[serde(skip_serializing_if = "Option::is_none")]
   click_action: Option<&'a str>,
+  #[serde(skip_serializing_if = "Option::is_none")]
   body_loc_key: Option<&'a str>,
+  #[serde(skip_serializing_if = "Option::is_none")]
   body_loc_args: Option<Vec<String>>,
+  #[serde(skip_serializing_if = "Option::is_none")]
   title_loc_key: Option<&'a str>,
+  #[serde(skip_serializing_if = "Option::is_none")]
   title_loc_args: Option<Vec<String>>,
-}
-
-impl <'a>ToJson for Notification<'a> {
-  fn to_json(&self) -> Json {
-    let mut root = BTreeMap::new();
-
-    root.insert("title".to_string(), self.title.to_json());
-    root.insert("icon".to_string(), self.icon.to_json());
-
-    if self.body.is_some() {
-      root.insert("body".to_string(), self.body.clone().unwrap().to_json());
-    }
-
-    if self.sound.is_some() {
-      root.insert("sound".to_string(), self.sound.clone().unwrap().to_json());
-    }
-
-    if self.badge.is_some() {
-      root.insert("badge".to_string(), self.badge.clone().unwrap().to_json());
-    }
-
-    if self.tag.is_some() {
-      root.insert("tag".to_string(), self.tag.clone().unwrap().to_json());
-    }
-
-    if self.color.is_some() {
-      root.insert("color".to_string(), self.color.clone().unwrap().to_json());
-    }
-
-    if self.click_action.is_some() {
-      root.insert("click_action".to_string(), self.click_action.clone().unwrap().to_json());
-    }
-
-    if self.body_loc_key.is_some() {
-      root.insert("body_loc_key".to_string(), self.body_loc_key.clone().unwrap().to_json());
-    }
-
-    if self.body_loc_args.is_some() {
-      let body_loc_args_str = self.body_loc_args.clone().unwrap().to_json().to_string();
-      root.insert("body_loc_args".to_string(), Json::String(body_loc_args_str));
-    }
-
-    if self.title_loc_key.is_some() {
-      root.insert("title_loc_key".to_string(), self.title_loc_key.clone().unwrap().to_json());
-    }
-
-    if self.title_loc_args.is_some() {
-      let title_loc_args_str = self.title_loc_args.clone().unwrap().to_json().to_string();
-      root.insert("title_loc_args".to_string(), Json::String(title_loc_args_str));
-    }
-
-    Json::Object(root)
-  }
 }
 
 /// A builder to get a `Notification` instance.

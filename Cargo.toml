@@ -10,6 +10,8 @@ documentation = "http://vishy1618.github.io/gcm/gcm/"
 keywords = ["gcm", "cloud", "messaging", "android", "ios"]
 
 [dependencies]
-rustc-serialize = "^0.3"
 hyper = "^0.10"
 hyper-native-tls = "^0.2"
+serde = "1.0.7"
+serde_derive = "1.0.7"
+serde_json = "1.0.2"

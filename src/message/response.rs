@@ -1,8 +1,9 @@
-use std::fmt;
+use std::fmt::{self, Display};
 use std::error;
-use rustc_serialize::json;
 
-#[derive(RustcDecodable, Debug)]
+use serde::{Deserialize, Deserializer};
+
+#[derive(Deserialize, Debug)]
 pub struct GcmResponse {
   pub message_id: Option<u64>,
   pub error: Option<String>,
@@ -13,11 +14,20 @@ pub struct GcmResponse {
   pub results: Option<Vec<MessageResult>>
 }
 
-#[derive(RustcDecodable, Debug)]
+#[derive(Deserialize, Debug)]
 pub struct MessageResult {
+  #[serde(deserialize_with = "deserialize_message_id", default)]
   pub message_id: Option<u64>,
   pub registration_id: Option<u64>,
   pub error: Option<String>
+}
+
+fn deserialize_message_id<'de, D>(deserializer: D) -> Result<Option<u64>, D::Error>
+    where D: Deserializer<'de> {
+  match u64::deserialize(deserializer) {
+    Ok(val) => Ok(Some(val)),
+    Err(_) => Ok(None)
+  }
 }
 
 #[derive(PartialEq, Debug)]
@@ -28,7 +38,7 @@ pub enum GcmError {
   InvalidJsonBody
 }
 
-impl fmt::Display for GcmError {
+impl Display for GcmError {
   fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     match *self {
       GcmError::Unauthorized => write!(f, "UnauthorizedError"),
@@ -47,11 +57,5 @@ impl error::Error for GcmError {
       GcmError::InvalidMessage(_) => "InvalidMessage",
       GcmError::InvalidJsonBody => "InvalidJsonBody"
     }
-  }
-}
-
-impl From<json::DecoderError> for GcmError {
-  fn from(_: json::DecoderError) -> GcmError {
-    GcmError::InvalidJsonBody
   }
 }

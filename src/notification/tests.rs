@@ -1,6 +1,4 @@
-extern crate rustc_serialize;
-
-use rustc_serialize::json::{ToJson};
+use serde_json;
 use {NotificationBuilder};
 
 #[test]
@@ -20,7 +18,11 @@ fn should_set_notification_body() {
       .body("body")
       .finalize();
 
+  let json_result = serde_json::to_string(&nm);
+
   assert_eq!(nm.body, Some("body"));
+  assert!(json_result.is_ok());
+  assert_eq!(json_result.unwrap(), r#"{"title":"title","body":"body","icon":"myicon"}"#);
 }
 
 #[test]
@@ -127,8 +129,10 @@ fn should_set_notification_body_loc_args() {
       .body_loc_args(vec!["args"])
       .finalize();
 
+  let json_result = serde_json::to_string(&nm);
+
   assert_eq!(nm.body_loc_args, Some(vec!["args".to_string()]));
-  assert_eq!(nm.to_json().search("body_loc_args").unwrap().as_string(), Some("[\"args\"]"));
+  assert_eq!(json_result.unwrap(), r#"{"title":"title","icon":"myicon","body_loc_args":["args"]}"#);
 }
 
 #[test]
@@ -154,6 +158,8 @@ fn should_set_notification_title_loc_args() {
       .title_loc_args(vec!["args"])
       .finalize();
 
+  let json_result = serde_json::to_string(&nm);
+
   assert_eq!(nm.title_loc_args, Some(vec!["args".to_string()]));
-  assert_eq!(nm.to_json().search("title_loc_args").unwrap().as_string(), Some("[\"args\"]"));
+  assert_eq!(json_result.unwrap(), r#"{"title":"title","icon":"myicon","title_loc_args":["args"]}"#);
 }

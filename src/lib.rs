@@ -76,6 +76,10 @@ pub use notification::*;
 
 pub use message::response::GcmError as Error;
 
-extern crate rustc_serialize;
 extern crate hyper;
 extern crate hyper_native_tls;
+extern crate serde;
+extern crate serde_json;
+
+#[macro_use]
+extern crate serde_derive;

@@ -5,7 +5,6 @@ pub mod response;
 pub use message::response::*;
 use notification::Notification;
 use std::collections::HashMap;
-use std::collections::BTreeMap;
 use std::str;
 use std::io::Read;
 
@@ -15,11 +14,13 @@ use hyper::mime::{Mime, TopLevel, SubLevel, Attr, Value};
 use hyper::status::{StatusCode,StatusClass};
 use hyper::net::HttpsConnector;
 use hyper_native_tls::NativeTlsClient;
-use rustc_serialize::json::{self, Json, ToJson};
+use serde_json::{from_str, to_string};
+use serde::{Serializer};
 
-#[derive(PartialEq, Debug, Clone)]
+#[derive(PartialEq, Debug, Serialize)]
 pub enum Priority {
-  Normal, High
+  Normal,
+  High
 }
 
 /// Represents a GCM message. Construct the GCM message 
@@ -30,71 +31,40 @@ pub enum Priority {
 /// 
 /// let message = Message::new("<registration id>").dry_run(true);
 /// ```
+#[derive(Serialize)]
 pub struct Message<'a> {
   to: &'a str,
+  #[serde(skip_serializing_if = "Option::is_none")]
   registration_ids: Option<Vec<String>>,
+  #[serde(skip_serializing_if = "Option::is_none")]
   collapse_key: Option<&'a str>,
+  #[serde(skip_serializing_if = "Option::is_none", serialize_with = "priority_lowercase")]
   priority: Option<Priority>,
+  #[serde(skip_serializing_if = "Option::is_none")]
   content_available: Option<bool>,
+  #[serde(skip_serializing_if = "Option::is_none")]
   delay_while_idle: Option<bool>,
+  #[serde(skip_serializing_if = "Option::is_none")]
   time_to_live: Option<i32>,
+  #[serde(skip_serializing_if = "Option::is_none")]
   restricted_package_name: Option<&'a str>,
+  #[serde(skip_serializing_if = "Option::is_none")]
   dry_run: Option<bool>,
+  #[serde(skip_serializing_if = "Option::is_none")]
   data: Option<HashMap<String, String>>,
+  #[serde(skip_serializing_if = "Option::is_none")]
   notification: Option<Notification<'a>>,
 }
 
-impl <'a> ToJson for Message<'a> {
-  fn to_json(&self) -> Json {
-    let mut root = BTreeMap::new();
-
-    root.insert("to".to_string(), self.to.to_json());
-
-    if self.registration_ids.is_some() {
-      root.insert("registration_ids".to_string(), 
-          self.registration_ids.clone().unwrap().to_json());
-    }
-
-    if self.collapse_key.is_some() {
-      root.insert("collapse_key".to_string(), self.collapse_key.clone().unwrap().to_json());
-    }
-
-    if self.priority.is_some() {
-      root.insert("priority".to_string(), match self.priority.clone().unwrap() {
-        Priority::Normal => Json::String("normal".to_string()),
-        Priority::High => Json::String("high".to_string()),
-      });
-    }
-
-    if self.content_available.is_some() {
-      root.insert("content_available".to_string(), self.content_available.unwrap().to_json());
-    }
-
-    if self.delay_while_idle.is_some() {
-      root.insert("delay_while_idle".to_string(), self.delay_while_idle.unwrap().to_json());
-    }
-
-    if self.time_to_live.is_some() {
-      root.insert("time_to_live".to_string(), self.time_to_live.unwrap().to_json());
-    }
-
-    if self.restricted_package_name.is_some() {
-      root.insert("restricted_package_name".to_string(), self.restricted_package_name.clone().unwrap().to_json());
-    }
-
-    if self.dry_run.is_some() {
-      root.insert("dry_run".to_string(), self.dry_run.unwrap().to_json());
-    }
-
-    if self.data.is_some() {
-      root.insert("data".to_string(), self.data.clone().unwrap().to_json());
-    }
-
-    if self.notification.is_some() {
-      root.insert("notification".to_string(), self.notification.clone().unwrap().to_json());
-    }
-
-    Json::Object(root)
+fn priority_lowercase<S>(priority_field: &Option<Priority>, serializer: S) -> Result<S::Ok, S::Error>
+    where S: Serializer
+{
+  // unwrapping cause we skip serializing if none
+  let normal_priority = Priority::Normal;
+  let priority = priority_field.as_ref().unwrap_or(&normal_priority);
+  match *priority {
+    Priority::Normal => serializer.serialize_str("normal"),
+    Priority::High => serializer.serialize_str("high")
   }
 }
 
@@ -225,13 +195,19 @@ impl <'a> Message<'a> {
   ///     .data(map)
   ///     .send("<GCM API Key>");
   /// ```
-  pub fn send(self, api_key: &'a str) -> Result<response::GcmResponse, response::GcmError> {
+  pub fn send(self, api_key: &'a str) -> Result<GcmResponse, GcmError> {
   	let ssl = NativeTlsClient::new().unwrap();
   	let connector = HttpsConnector::new(ssl);
   	let client = Client::with_connector(connector);
+    let json_body;
+
+    match to_string(&self) {
+      Ok(body) => {json_body = body;},
+      Err(_) => {return Err(GcmError::InvalidJsonBody);}
+    };
 
   	let result = client.post("https://gcm-http.googleapis.com/gcm/send")
-  					.body(self.to_json().to_string().as_bytes())
+  					.body(json_body.as_bytes())
   					.header(header::Authorization("key=".to_string() + api_key))
   					.header(
               header::ContentType(
@@ -258,20 +234,20 @@ impl <'a> Message<'a> {
     }
   }
 
-  fn parse_response(status: StatusCode, body: &str) -> Result<response::GcmResponse, response::GcmError> {
+  fn parse_response(status: StatusCode, body: &str) -> Result<GcmResponse, GcmError> {
   	//200 Ok: Request was successful!
   	if status == StatusCode::Ok {
-  		return Ok(try!(json::decode(body)));
+      return from_str(body).or_else(|_| Err(GcmError::InvalidJsonBody));
   	}
   	//check for server error (5xx)
   	if status.class() == StatusClass::ServerError {
-  		return Err(response::GcmError::ServerError);
+  		return Err(GcmError::ServerError);
   	}
   	//match remaining status codes
   	match status {
-  		StatusCode::Unauthorized => Err(response::GcmError::Unauthorized),
-  		StatusCode::BadRequest => Err(response::GcmError::InvalidMessage(body.to_string())),
-  		_ => Err(response::GcmError::InvalidMessage("Unknown Error".to_string()))
+  		StatusCode::Unauthorized => Err(GcmError::Unauthorized),
+  		StatusCode::BadRequest => Err(GcmError::InvalidMessage(body.to_string())),
+  		_ => Err(GcmError::InvalidMessage("Unknown Error".to_string()))
   	}
   }
 }
