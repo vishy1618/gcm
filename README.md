@@ -1,3 +1,6 @@
+> # This library is no longer maintained.
+> Google has [deprecated and removed GCM APIs](https://developers.google.com/cloud-messaging/faq) to move to FCM (Firebase Cloud Messaging). As such, this library was removed from crates.io on 30th August, 2020. Please use the alternative [fcm library](https://crates.io/crates/fcm) instead.
+
 gcm
 ===
 
